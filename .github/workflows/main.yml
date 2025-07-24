@@ -22,10 +22,16 @@ jobs:
       run: |
         curl -fsSL "https://raw.githubusercontent.com/ZhiXuanWang/cf-speed-dns/main/index.html" -o index.html
 
-    - name: Commit changes
+    - name: Detect changes
+      id: changes
+      run: |
+        git status -s | grep -E 'index\.html' && echo "changes_detected=true" >> $GITHUB_OUTPUT || echo "No file changes"
+
+    - name: Commit and push
+      if: steps.changes.outputs.changes_detected == 'true'
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
         git add index.html
-        git commit -m "chore: Auto-update index.html" || echo "No changes to commit"
+        git commit -m "chore: Auto-sync files at $(date +'%Y-%m-%d %H:%M UTC')"
         git push
