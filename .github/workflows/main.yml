@@ -20,7 +20,7 @@ jobs:
 
     - name: Download worker file
       run: |
-        curl -fsSL "https://raw.githubusercontent.com/ZhiXuanWang/cf-speed-dns/main/index.html" -o index.html
+        curl -fsSL "https://raw.githubusercontent.com/ppttgov/cf-speed-dns/refs/heads/main/index.html" -o index.html
 
     - name: Detect changes
       id: changes
